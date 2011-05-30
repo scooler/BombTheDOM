@@ -1,0 +1,22 @@
+
+#board{
+  background-color: #98bba7;
+}
+
+#board td{
+  min-width: 32px;
+  min-height: 32px;
+}
+
+#board tr{
+  height: 32px;
+}
+.hardwall{
+  background-image:url('images/hardwall.png');
+  background-repeat:no-repeat;
+}
+
+.softwall{
+  background-image:url('images/softwall.png');
+  background-repeat:no-repeat;
+}
