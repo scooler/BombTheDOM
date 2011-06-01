@@ -13,6 +13,8 @@ MyApp.io = function(){
         // console.log(e);
     }
     keyDownTimer = setTimeout(reactToKeyDown, 50);
+    e.preventDefault();
+    return false;
   };
 
   var keyUp = function(e){
@@ -27,6 +29,8 @@ MyApp.io = function(){
         players[keyMapping.player].stop();
     }
     keyUpTimer = setTimeout(reactToKeyUp, 50);
+    e.preventDefault();
+    return false;
   };
   return {
     keyDown: keyDown,
