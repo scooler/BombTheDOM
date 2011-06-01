@@ -16,7 +16,7 @@ MyApp.params = function(){
     goodiesSizeX:   goodiesSizeX, //where goodies can be held
     goodiesSizeY:   goodiesSizeY, //where goodies can be held
     boardGoodies:   boardGoodies, //how many goodies should be on board
-    animationSpeed: 500,          // time in ms between animation frames
+    animationSpeed: 100,          // time in ms between animation frames
     playersNumer:   2,            //how many players there will be (for now not to change)
     tileSize:       32
   }

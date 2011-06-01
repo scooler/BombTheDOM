@@ -15,6 +15,7 @@ MyApp.player = function(startX, startY){
     playerElem.className = "player"
     playerElem.style.left = playerAbsPosition[0];
     playerElem.style.top = playerAbsPosition[1];
+    // playerElem.style.backgroundPosition = "0px 0px";
     document.body.insertBefore(playerElem, document.body.firstChild);    
   }();
 
