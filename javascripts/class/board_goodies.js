@@ -20,8 +20,8 @@
 
     var i = 0, x, y, goodieGenerated;
     while (i < goodieNumber){
-      x = MyApp.utils.random(boardDistance, goodiesSizeX+boardDistance);
-      y = MyApp.utils.random(boardDistance, goodiesSizeY+boardDistance);
+      x = MyApp.utils.random(boardDistance, goodiesSizeX+boardDistance-1);
+      y = MyApp.utils.random(boardDistance, goodiesSizeY+boardDistance-1);
       if (typeof goodies[x][y] === "undefined"){
         goodies[x][y] = MyApp.utils.random(1, MyApp.goodie.length);
         i ++;
