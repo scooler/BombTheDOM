@@ -1,23 +1,6 @@
-//create board
 //load images
-//
+MyApp = {};
 
-MyApp = (function(){
-  var onLoadHandlers = [];
-  window.onload = function(){
-    var i;
-    for (i = 0; i<onLoadHandlers.length; i++){
-      if (typeof onLoadHandlers[i]=== "function"){
-        onLoadHandlers[i]();
-      }
-    }
-  }
-  return {
-    addOnLoad: function(handler){
-      onLoadHandlers.push(handler);
-    }
-  }
-})();
 
 MyApp.params = function(){
   var boardWidth = 20;

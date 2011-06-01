@@ -1,18 +1,31 @@
-MyApp.player = function(elem){
+MyApp.player = function(startX, startY){
   var power = 1;
   var bombs = 1;
-  var moving = false;
-
-  var findBoardElemYouAreOn = function(){
-       //TODO   
-    
-  };
 
   var toAbsolute = function(x,y){
     var result = MyApp.board.toAbsolute(x,y);
     result[1] = result[1]-16; //player is 32x48 - taller than normal tiles
     return result;
   }
+
+  var createPlayerElem = function(){
+    var playerElem;
+    playerAbsPosition = toAbsolute(startX, startY);
+    playerElem = document.createElement("div");
+    playerElem.className = "player"
+    playerElem.style.left = playerAbsPosition[0];
+    playerElem.style.top = playerAbsPosition[1];
+    document.body.insertBefore(playerElem, document.body.firstChild);    
+  }();
+
+
+  var findBoardElemYouAreOn = function(){
+       //TODO       
+  };
+
+
+  MyApp.playerMovement();
+
   return {
     addBombs: function(){
       bombs++;
@@ -23,29 +36,12 @@ MyApp.player = function(elem){
     layBomb: function(){
        //TODO   
     },
-    //All these functions are togle - you call it once on keyd down
-    moveDown: function(){
-       //TODO   
-      
-    },
-    moveUp: function(){
-       //TODO   
-      
-    },
-    moveRight: function(){
-       //TODO   
-      
-    },
-    moveLeft: function(){
-       //TODO   
-      
-    },
-    stop: function(){
-       //TODO   
-      
-    },
+
     getPower : function(){
       return power;
-    }
+    }, 
+    toAbsolute: toAbsolute
+
+
   }  
 };

@@ -30,3 +30,18 @@ MyApp.utils = function(){
     animate:          animate
   }
 }();
+
+MyApp.utils.addOnLoad = (function(){
+  var onLoadHandlers = [];
+  window.onload = function(){
+    var i;
+    for (i = 0; i<onLoadHandlers.length; i++){
+      if (typeof onLoadHandlers[i]=== "function"){
+        onLoadHandlers[i]();
+      }
+    }
+  }
+  return function(handler){
+      onLoadHandlers.push(handler);
+  }
+})();
