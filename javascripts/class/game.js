@@ -7,6 +7,7 @@ MyApp.game = function(){
     for (i=0 ; i<playersNumer; i++){
       players.push(MyApp.player(playersPossitions[i][0], playersPossitions[i][1]));
     }
+    MyApp.io.setPlayers(players);
   };
   MyApp.utils.addOnLoad(createPlayers);
 
