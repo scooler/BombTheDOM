@@ -1,6 +1,7 @@
 MyApp.player = function(startX, startY){
   var power = 1;
   var bombs = 1;
+  var movement = MyApp.playerMovement();
 
   var toAbsolute = function(x,y){
     var result = MyApp.board.toAbsolute(x,y);
@@ -25,7 +26,6 @@ MyApp.player = function(startX, startY){
   };
 
 
-  MyApp.playerMovement();
 
   return {
     addBombs: function(){
@@ -41,7 +41,9 @@ MyApp.player = function(startX, startY){
     getPower : function(){
       return power;
     }, 
-    toAbsolute: toAbsolute
+    toAbsolute: toAbsolute,
+
+    movement: movement
 
 
   }  

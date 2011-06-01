@@ -9,5 +9,9 @@ MyApp.game = function(){
     }
   };
   MyApp.utils.addOnLoad(createPlayers);
+
+  MyApp.utils.addCallback("keydown", MyApp.io.keyDown);
+  MyApp.utils.addCallback("keyup", MyApp.io.keyUp);
+
   return {};
 }();
