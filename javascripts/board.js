@@ -31,30 +31,77 @@ MyApp.board = (function(){
       return "hardwall";
     }
 
+
     if (x>boardDistance-1 && x < boardWidth-boardDistance){
       if (y>boardDistance-1 && y < boardHeight-boardDistance){
+        if (isThereGoodie(x, y)){
+          if (isThereGoodie(x, y) === 1){
+            return "bomb";
+          }
+          return "range";
+        }
         return "softwall"
       }
     }
     return "empty";
   };
 
-  var generateGoodies = function(){
-    var goodieNumber = MyApp.params.boardGoodies;
-    var maxX = MyApp.params.boardWidth;
-    var maxY = MyApp.params.boardHeight;
-
-    var i = 0, x, y;
-    while (i < goodieNumber){
-      x = 
+  var initiateGoodies = function(){
+    var goodiesSizeX = MyApp.params.goodiesSizeX, i;
+    for (i = 0; i<goodiesSizeX; i++){
+      goodies.push([]);
     }
   };
 
-  MyApp.addOnLoad(createBoard);
-  MyApp.addOnLoad(generateGoodies);
-  return {
-    isThereGoodie : function(x,y){
-      return goodies[x][y] || 0;
+
+//TODO implement some fairness - more than random
+  var generateGoodies = function(){
+    initiateGoodies();
+    var goodieNumber = MyApp.params.boardGoodies;
+    var boardDistance = MyApp.params.boardDistance;
+    var goodiesSizeX = MyApp.params.goodiesSizeX;
+    var goodiesSizeY = MyApp.params.goodiesSizeY;
+
+    var i = 0, x, y, goodieGenerated;
+    while (i < goodieNumber){
+      x = MyApp.utils.random(0, goodiesSizeX);
+      y = MyApp.utils.random(0, goodiesSizeY);
+      if (typeof goodies[x][y] === "undefined"){
+        goodies[x][y] = MyApp.utils.random(1, MyApp.goodie.length);
+        i ++;
+      };
     }
+  }();
+
+  var isThereGoodie = function(x,y){
+    var distance = MyApp.params.boardDistance;
+    return goodies[x-distance][y-distance] || 0;
+  };
+  var boardPlayersPossitions = function(){
+    var boardWidth = MyApp.params.boardWidth;
+    var boardHeight = MyApp.params.boardHeight;
+    var minX = 1, minY = 1, maxX = boardWidth-2, maxY = boardHeight-2;
+    return [[minX, minY], [maxX, maxY], [minX, maxY], [maxX, minY]];
+  };
+
+  var getPlayersStartPossition = function(){
+    var playersNumer = MyApp.params.playersNumer;
+    var i, result = [], playersPossitions = boardPlayersPossitions();
+    for (i = 0; i<playersNumer; i++){
+      result.push(playersPossitions.shift());
+    }
+    return result;
+  };
+  var toAbsolute = function(x,y){
+    var tileSize = MyApp.params.tileSize;
+    return [x*tileSize, y*tileSize];
+  }
+
+  MyApp.addOnLoad(createBoard);
+  return {
+    isThereGoodie : isThereGoodie,
+    goodies: goodies,
+    getPlayersStartPossition: getPlayersStartPossition,
+    toAbsolute : toAbsolute
   };
 })();
