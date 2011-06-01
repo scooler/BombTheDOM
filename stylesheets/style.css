@@ -19,18 +19,18 @@
   height: 32px;
 }
 .hardwall{
-  background-image:url('images/hardwall.png');
+  background-image:url('../images/hardwall.png');
 }
 
 .softwall{
-  background-image:url('images/softwall.png');
+  background-image:url('../images/softwall.png');
 }
 
 .bomb{
-  background-image:url('images/bonusbomb.png');
+  background-image:url('../images/bonusbomb.png');
 }
 .range{
-  background-image:url('images/bonuspower.png');
+  background-image:url('../images/bonuspower.png');
 }
 div{
   width: 32px;
@@ -39,33 +39,33 @@ div{
   position: absolute;
 }
 .player{
-  background-image:url('images/player1.png');  
+  background-image:url('../images/player1.png');  
 }
 .player-1{
-  background-image:url('images/player1.png');  
+  background-image:url('../images/player1.png');  
   background-position: -32px 0px;
 }
 .player-2{
-  background-image:url('images/player1.png');  
+  background-image:url('../images/player1.png');  
   background-position: -64px 0px;
 }
 .player-3{
-  background-image:url('images/player1.png');  
+  background-image:url('../images/player1.png');  
   background-position: -96px 0px;
 }
 .player-4{
-  background-image:url('images/player1.png');  
+  background-image:url('../images/player1.png');  
   background-position: -128px 0px;
 }
 .player-5{
-  background-image:url('images/player1.png');  
+  background-image:url('../images/player1.png');  
   background-position: -160px 0px;
 }
 .player-6{
-  background-image:url('images/player1.png');  
+  background-image:url('../images/player1.png');  
   background-position: -192px 0px;
 }
 .player-7{
-  background-image:url('images/player1.png');  
+  background-image:url('../images/player1.png');  
   background-position: -224px 0px;
 }
