@@ -17,10 +17,11 @@ MyApp.playerMovement = function(elem){
     }
   };
 
+
   var startMovement = function(direction){
     var movementSettings = settings[direction];
-    var elemPosition = elem.style.backgroundPosition || "0px 0px";
-    elem.style.backgroundPosition = elemPosition.split(" ")[0]+" "+movementSettings.spritePos;
+    MyApp.utils.changeBgPossitionY(elem, movementSettings.spritePos);
+    animator = MyApp.utils.animate(elem, 8, true);
   };
 
   
@@ -29,33 +30,33 @@ MyApp.playerMovement = function(elem){
     moveDown: function(){
       startMovement("down");
       //TODO   
-      console.log(elem);
-      console.log("moveDown()");
+      // console.log(elem);
+      // console.log("moveDown()");
     },
     moveUp: function(){
       startMovement("up");
       //TODO   
-      console.log(elem);
-      console.log("moveUp()");
+      // console.log(elem);
+      // console.log("moveUp()");
     },
     moveRight: function(){
       startMovement("right");
       //TODO   
-      console.log(elem);
-      console.log("moveRight()");
+      // console.log(elem);
+      // console.log("moveRight()");
     },
     moveLeft: function(){
       startMovement("left");
       //TODO   
-      console.log(elem);
-      console.log("moveLeft()");
+      // console.log(elem);
+      // console.log("moveLeft()");
     },
     stop: function(){
       if (typeof animator === "object"){
         animator.stopAnimation();
       }
-      console.log(elem);
-      console.log("stop()");
+      // console.log(elem);
+      // console.log("stop()");
     }
   }
 }

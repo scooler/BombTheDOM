@@ -7,9 +7,15 @@ MyApp.io = function(){
       clearTimeout(keyDownTimer);
       keyDownTimer = undefined;
     }
+    if (keyUpTimer){ // new keydown sends bogus keyup - dismiss it
+      clearTimeout(keyUpTimer);
+      keyUpTimer = undefined;
+    }
     var reactToKeyDown = function(){    
         var keyMapping = MyApp.io.keyMap[e.keyCode];
-        players[keyMapping.player][keyMapping.action]();
+        if ( typeof keyMapping === "object"){
+          players[keyMapping.player][keyMapping.action]();
+        }
         // console.log(e);
     }
     keyDownTimer = setTimeout(reactToKeyDown, 50);
@@ -26,7 +32,11 @@ MyApp.io = function(){
     var reactToKeyUp = function(){    
         // console.log(e);        
         var keyMapping = MyApp.io.keyMap[e.keyCode];
-        players[keyMapping.player].stop();
+        if ( typeof keyMapping === "object"){
+          if (keyMapping.action.slice(0,4) === "move"){
+            players[keyMapping.player].stop();
+          }
+        }
     }
     keyUpTimer = setTimeout(reactToKeyUp, 50);
     e.preventDefault();

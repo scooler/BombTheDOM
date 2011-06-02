@@ -23,11 +23,11 @@ MyApp.utils.addOnLoad = (function(){
 
 
 MyApp.utils.addCallback = function(event, callback){
-  if (document.addEventListener){
-    document.addEventListener(event, callback, false);
-  }else if (document.attachEvent){
-    document.attachEvent("on"+event, callback);
+  if (window.addEventListener){
+    window.addEventListener(event, callback, false);
+  }else if (window.attachEvent){
+    window.attachEvent("on"+event, callback);
   }else {
-    document["on"+event] = callback;
+    window["on"+event] = callback;
   }
 };
