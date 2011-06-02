@@ -33,12 +33,6 @@
 
     if (x>boardDistance-1 && x < boardWidth-boardDistance){
       if (y>boardDistance-1 && y < boardHeight-boardDistance){
-        // if (MyApp.board.isThereGoodie(x, y)){ //soon to be gone - don't get heart atack (but still ugly)
-        //   if (MyApp.board.isThereGoodie(x, y) === 1){
-        //     return "bomb";
-        //   }
-        //   return "range";
-        // }
         return 1;
       }
     }
@@ -102,7 +96,6 @@
     };
   };
 
-  //TODO maybe a separete class (if it grows any more)
   var getClassNameForCords = function(x,y){
     return boardValues[board[x][y]].className;
   }
@@ -111,14 +104,26 @@
     var x = Math.floor(absX/32);
     var y = Math.floor((absY+16)/32);
     // if (x<0 || x>20 || y<0 || y > 15){
-      console.log("fromAbsolute(" + absX + ", " + absY + ")=[" + x +", " + y + "]");
+      // console.log("fromAbsolute(" + absX + ", " + absY + ")=[" + x +", " + y + "]");
     // }
     return [x,y];
   };
+  var isPassable = function(coords){
+    return boardValues[ board[ coords[0] ][ coords[1] ] ].passable;
+  }
+  
   var canMoveTo = function(x,y){
-    var boardCords = fromAbsolute(x,y);
-    console.log( "board[x,y]="+board[boardCords[0]][boardCords[1]] );
-    return boardValues[board[boardCords[0]][boardCords[1]]].passable;
+    var shift = MyApp.params.tileSize - MyApp.params.collisionSoftness;
+
+    //4 corners for collision detection
+    var topLeft = fromAbsolute(x,y);
+    var topRight = fromAbsolute(x + shift, y);
+    var bottomLeft = fromAbsolute(x, y + shift);
+    var bottomRight = fromAbsolute(x + shift, y + shift);
+
+    // console.log( "board[x,y]="+board[boardCords[0]][boardCords[1]] );
+
+    return isPassable(topLeft) && isPassable(topRight) && isPassable(bottomLeft) && isPassable(bottomRight);
   };
   MyApp.board.canMoveTo = canMoveTo;
   MyApp.utils.addOnLoad(createBoardDOM);
