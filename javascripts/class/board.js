@@ -17,11 +17,12 @@ MyApp.board = (function(){
   var toAbsolute = function(x,y){
     var tileSize = MyApp.params.tileSize;
     return [x*tileSize, y*tileSize];
-  }
+  };
+
+
 
   return {
     getPlayersStartPossition: getPlayersStartPossition,
-    toAbsolute : toAbsolute,
-    canMoveTo: function(x,y){}
-  };
+    toAbsolute : toAbsolute
+  }
 })();
