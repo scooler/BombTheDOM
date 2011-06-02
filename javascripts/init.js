@@ -5,7 +5,7 @@ MyApp = {};
 MyApp.params = function(){
   var boardWidth = 20;
   var boardHeight = 15;
-  var boardDistance = 2;
+  var boardDistance = 3;
   var goodiesSizeX = boardWidth-boardDistance*2;
   var goodiesSizeY = boardHeight-boardDistance*2;
   var boardGoodies = Math.floor((boardWidth-boardDistance)*(boardHeight-boardDistance)/5);
@@ -20,8 +20,9 @@ MyApp.params = function(){
     playersNumer:       2,            //how many players there will be (for now not to change)
     tileSize:           32,           //how big the board element is (should use it more :P)
     playerHeight:       48,           //how hight is the player (for collision detection)
-    movementSpeed:      5,            //how much player moves for every <animationSpeed>ms
-    collisionSoftness:  2             //px that I let slide during collision detection (so that stuff won't be so hard)
+    movementSpeed:      50,           // how often you move
+    movementShift:      3,            //how much player moves for every <movementSpeed>ms
+    collisionSoftness:  4             //px that I let slide during collision detection (so that stuff won't be so hard)
   }
 }();
 

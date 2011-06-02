@@ -24,12 +24,12 @@ MyApp.playerMovement = function(elem){
     }
   };
 
-  var amIStuck = function(newPos, speed, setting){
-    // some optimisation - 
-    // if ( (32-(newPos % 32)) > speed && setting.property === "left"){
+  var amIStuck = function(newPos, shift, setting){
+    // some optimisation - needs also to look at softness
+    // if ( (32-(newPos % 32)) > shift && setting.property === "left"){
     //   return false;//no worries here
     // }
-    // if ( (32-(newPos + 16)) % 32 > speed && setting.property === "top"){
+    // if ( (32-(newPos + 16)) % 32 > shift && setting.property === "top"){
     //   return false;
     // }
 
@@ -44,17 +44,17 @@ MyApp.playerMovement = function(elem){
   };
 
   var startMoving = function(setting){
-    var speed = MyApp.params.movementSpeed;
+    var shift = MyApp.params.movementShift;
     var moving = true, timerHandle;
     if (typeof elem.mover === "object"){
       mover.stopMovement();
     }
     var animation = function(){
       if (!moving){ return };
-      var newPos = parseInt(elem.style[setting.property]) + (speed*setting.direction);
-      if (amIStuck(newPos, speed, setting)){ return };
+      var newPos = parseInt(elem.style[setting.property]) + (shift*setting.direction);
+      if (amIStuck(newPos, shift, setting)){ return };
       elem.style[setting.property] = newPos+"px";
-      timerHandle = setTimeout(animation, MyApp.params.animationSpeed);
+      timerHandle = setTimeout(animation, MyApp.params.movementSpeed);
     }
     animation();
     elem.mover = {
