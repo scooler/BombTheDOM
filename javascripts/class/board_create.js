@@ -113,12 +113,13 @@
   }
   
   var canMoveTo = function(x,y){
-    var shift = MyApp.params.tileSize - MyApp.params.collisionSoftness;
+    var softness = MyApp.params.collisionSoftness;
+    var shift = MyApp.params.tileSize - softness;
 
     //4 corners for collision detection
-    var topLeft = fromAbsolute(x,y);
-    var topRight = fromAbsolute(x + shift, y);
-    var bottomLeft = fromAbsolute(x, y + shift);
+    var topLeft = fromAbsolute(x + softness,y + softness);
+    var topRight = fromAbsolute(x + shift, y + softness);
+    var bottomLeft = fromAbsolute(x + softness, y + shift);
     var bottomRight = fromAbsolute(x + shift, y + shift);
 
     // console.log( "board[x,y]="+board[boardCords[0]][boardCords[1]] );

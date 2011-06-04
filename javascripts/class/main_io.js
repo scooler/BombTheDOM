@@ -37,7 +37,7 @@ MyApp.io = function(){
             players[keyMapping.player].stop();
           }
         }
-    }
+    };
     keyUpTimer = setTimeout(reactToKeyUp, 50);
     e.preventDefault();
     return false;
