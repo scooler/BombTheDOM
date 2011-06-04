@@ -24,7 +24,8 @@ MyApp.playerMovement = function(elem){
     }
   };
 
-  var amIStuck = function(newPos, shift, setting){
+  var amIStuck = function(newPos, setting){
+    var x,y;
     // some optimisation - needs also to look at softness
     // if ( (32-(newPos % 32)) > shift && setting.property === "left"){
     //   return false;//no worries here
@@ -32,13 +33,12 @@ MyApp.playerMovement = function(elem){
     // if ( (32-(newPos + 16)) % 32 > shift && setting.property === "top"){
     //   return false;
     // }
-
     if (setting.property === "left"){
-      var x =  newPos;
-      var y = parseInt(elem.style.top);
+      x =  newPos;
+      y = parseInt(elem.style.top, 10);
     }else{      
-      var x =  parseInt(elem.style.left);
-      var y = newPos;
+      x =  parseInt(elem.style.left, 10);
+      y = newPos;
     }
     return ! MyApp.board.canMoveTo(x, y);
   };
@@ -46,16 +46,16 @@ MyApp.playerMovement = function(elem){
   var startMoving = function(setting){
     var shift = MyApp.params.movementShift;
     var moving = true, timerHandle;
-    if (typeof elem.mover === "object"){
+    if (typeof elem.mover === "object"){ 
       mover.stopMovement();
     }
     var animation = function(){
-      if (!moving){ return };
-      var newPos = parseInt(elem.style[setting.property]) + (shift*setting.direction);
-      if (amIStuck(newPos, shift, setting)){ return };
+      if (!moving){ return; };
+      var newPos = parseInt(elem.style[setting.property], 10) + (shift*setting.direction);
+      if (amIStuck(newPos, setting)){ return; };
       elem.style[setting.property] = newPos+"px";
       timerHandle = setTimeout(animation, MyApp.params.movementSpeed);
-    }
+    };
     animation();
     elem.mover = {
       stopMovement: function(){
@@ -64,9 +64,11 @@ MyApp.playerMovement = function(elem){
       }
     };
     return elem.mover;
-  }
+  };
 
   var move = function(direction){
+  // console.log(elem);
+  // console.log("move(" + direction + "");
     var movementSettings = settings[direction];
     MyApp.utils.changeBgPossitionY(elem, movementSettings.spritePos);
     animator = MyApp.utils.animate(elem, 8, true);
@@ -78,23 +80,15 @@ MyApp.playerMovement = function(elem){
     //All these functions are togle - you call it once on key down
     moveDown: function(){
       move("down");
-      // console.log(elem);
-      // console.log("moveDown()");
     },
     moveUp: function(){
       move("up");
-      // console.log(elem);
-      // console.log("moveUp()");
     },
     moveRight: function(){
       move("right");
-      // console.log(elem);
-      // console.log("moveRight()");
     },
     moveLeft: function(){
       move("left");
-      // console.log(elem);
-      // console.log("moveLeft()");
     },
     stop: function(){
       if (typeof animator === "object"){
@@ -106,5 +100,5 @@ MyApp.playerMovement = function(elem){
       // console.log(elem);
       // console.log("stop()");
     }
-  }
-}
+  };
+};

@@ -10,26 +10,17 @@ MyApp.player = function(startX, startY){
   };
 
   var createPlayerElem = function(){
-    playerAbsPosition = toAbsolute(startX, startY);
-    playerElem = document.createElement("div");
-    playerElem.className = "player"
+    var playerAbsPosition = toAbsolute(startX, startY);
+    var playerElem = document.createElement("div");
+    playerElem.className = "player";
     playerElem.style.left = playerAbsPosition[0];
     playerElem.style.top = playerAbsPosition[1];
     playerElem.style.backgroundPosition = "0px 0px";
     document.body.insertBefore(playerElem, document.body.firstChild);    
-  }();
+  };
+  playerElem = createPlayerElem();
 
   var movement = MyApp.playerMovement(playerElem);
-  
-
-
-
-
-  var findBoardElemYouAreOn = function(){
-       //TODO       
-  };
-
-
 
   return {
     addBombs: function(){
@@ -53,7 +44,5 @@ MyApp.player = function(startX, startY){
     moveLeft: movement.moveLeft,
     moveRight: movement.moveRight,
     stop: movement.stop
-
-
-  }  
+  };
 };

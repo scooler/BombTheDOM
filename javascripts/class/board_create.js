@@ -1,5 +1,5 @@
 (function(){ 
-  var board = []; 
+  var board; 
   //looks nice, but it isn't dynamic :(
   // [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   // [0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0],
@@ -42,6 +42,7 @@
   var initiateBoard = function(){
     var boardWidth = MyApp.params.boardWidth;
     var boardHeight = MyApp.params.boardHeight;
+    var board = [];
     var i, j;
 
     for (i=0; i<boardWidth; i++){
@@ -50,7 +51,9 @@
         board[i][j] = initialBoard(i, j);
       }
     }
-  }();
+    return board;
+  };
+  board = initiateBoard();
 
 
 
@@ -76,6 +79,10 @@
       passable: true
     }
   ];
+  
+  var getClassNameForCords = function(x,y){
+    return boardValues[board[x][y]].className;
+  };
 
   var createBoardDOM = function(){
     var board = document.getElementById("board");
@@ -93,12 +100,10 @@
         trElem.appendChild(tdElem);
       }
       board.appendChild(trElem);
-    };
+    }
   };
 
-  var getClassNameForCords = function(x,y){
-    return boardValues[board[x][y]].className;
-  }
+
 
   var fromAbsolute = function(absX, absY){
     var x = Math.floor(absX/32);
@@ -110,7 +115,7 @@
   };
   var isPassable = function(coords){
     return boardValues[ board[ coords[0] ][ coords[1] ] ].passable;
-  }
+  };
   
   var canMoveTo = function(x,y){
     var softness = MyApp.params.collisionSoftness;
@@ -128,4 +133,4 @@
   };
   MyApp.board.canMoveTo = canMoveTo;
   MyApp.utils.addOnLoad(createBoardDOM);
-})();
+}());

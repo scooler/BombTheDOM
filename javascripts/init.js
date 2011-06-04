@@ -2,7 +2,7 @@
 MyApp = {};
 
 
-MyApp.params = function(){
+MyApp.params = (function(){
   var boardWidth = 20;
   var boardHeight = 15;
   var boardDistance = 2;
@@ -23,8 +23,8 @@ MyApp.params = function(){
     movementSpeed:      50,           // how often you move
     movementShift:      3,            //how much player moves for every <movementSpeed>ms
     collisionSoftness:  4             //px that I let slide during collision detection (so that stuff won't be so hard)
-  }
-}();
+  };
+}());
 
 MyApp.goodie = {
   "1": "bomb",
@@ -32,5 +32,5 @@ MyApp.goodie = {
   // "3": "speed",
   // "4": "kick",
   length: 2
-}
+};
   

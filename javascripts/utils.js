@@ -1,10 +1,10 @@
-MyApp.utils = function(){
+MyApp.utils = (function(){
   return {
     random: function(from, to){
       return Math.floor((Math.random()*(to-from+1))+from);
     }
-  }
-}();
+  };
+}());
 
 MyApp.utils.addOnLoad = (function(){
   var onLoadHandlers = [];
@@ -15,11 +15,11 @@ MyApp.utils.addOnLoad = (function(){
         onLoadHandlers[i]();
       }
     }
-  }
+  };
   return function(handler){
       onLoadHandlers.push(handler);
-  }
-})();
+  };
+}());
 
 
 MyApp.utils.addCallback = function(event, callback){

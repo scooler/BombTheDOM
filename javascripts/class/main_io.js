@@ -1,4 +1,4 @@
-MyApp.io = function(){
+MyApp.io = (function(){
   var players;
   var keyDownTimer, keyUpTimer;
   var keyDown = function(e){
@@ -17,7 +17,7 @@ MyApp.io = function(){
           players[keyMapping.player][keyMapping.action]();
         }
         // console.log(e);
-    }
+    };
     keyDownTimer = setTimeout(reactToKeyDown, 50);
     e.preventDefault();
     return false;
@@ -48,8 +48,8 @@ MyApp.io = function(){
     setPlayers: function(pls){
       players = pls;
     }
-  }
-}();
+  };
+}());
 
 MyApp.io.keyMap = {
   37:{
@@ -93,4 +93,4 @@ MyApp.io.keyMap = {
     player: 1,
     action: "layBomb"
   }
-}
+};

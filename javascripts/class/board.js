@@ -24,5 +24,5 @@ MyApp.board = (function(){
   return {
     getPlayersStartPossition: getPlayersStartPossition,
     toAbsolute : toAbsolute
-  }
-})();
+  };
+}());

@@ -1,4 +1,4 @@
-MyApp.game = function(){
+MyApp.game = (function(){
   var players = [];
   var createPlayers = function(){
     var playersNumer = MyApp.params.playersNumer;
@@ -15,4 +15,4 @@ MyApp.game = function(){
   MyApp.utils.addCallback("keyup", MyApp.io.keyUp);
 
   return {};
-}();
+}());
