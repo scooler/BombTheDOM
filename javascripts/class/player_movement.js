@@ -24,15 +24,14 @@ MyApp.playerMovement = function(elem){
     }
   };
 
-  var amIStuck = function(newPos, setting){
+  var fromAbsolute = function(absX, absY){
+    var x = Math.floor(absX/32);
+    var y = Math.floor((absY+16)/32);
+    return [x,y];
+  };
+
+  var getNewCoords = function(newPos, setting){
     var x,y;
-    // some optimisation - needs also to look at softness
-    // if ( (32-(newPos % 32)) > shift && setting.property === "left"){
-    //   return false;//no worries here
-    // }
-    // if ( (32-(newPos + 16)) % 32 > shift && setting.property === "top"){
-    //   return false;
-    // }
     if (setting.property === "left"){
       x =  newPos;
       y = parseInt(elem.style.top, 10);
@@ -40,7 +39,28 @@ MyApp.playerMovement = function(elem){
       x =  parseInt(elem.style.left, 10);
       y = newPos;
     }
-    return ! MyApp.board.canMoveTo(x, y);
+    return [x,y];
+  };
+
+  var getAllCorners = function(newPos, setting){
+    var x,y;
+    [x,y] = getNewCoords(newPos, setting);
+    var softness = MyApp.params.collisionSoftness;
+    var shift = MyApp.params.tileSize - softness;
+
+    return [x + softness, x + shift, y + softness, y + shift];
+  };
+
+  var amIStuck = function(newPos, setting){
+    var xLeft, xRight, yTop, yBottom;
+    [xLeft, xRight, yTop, yBottom] = getAllCorners(newPos, setting);
+
+    var topLeft = fromAbsolute(xLeft, yTop);
+    var topRight = fromAbsolute(xRight, yTop);
+    var bottomLeft = fromAbsolute(xLeft, yBottom);
+    var bottomRight = fromAbsolute(xRight, yBottom);
+
+    return ! MyApp.board.canMoveTo(topLeft, topRight, bottomLeft, bottomRight);
   };
 
   var startMoving = function(setting){
@@ -99,6 +119,7 @@ MyApp.playerMovement = function(elem){
       }
       // console.log(elem);
       // console.log("stop()");
-    }
+    },
+    fromAbsolute: fromAbsolute
   };
 };

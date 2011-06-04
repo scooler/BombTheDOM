@@ -22,7 +22,8 @@ MyApp.params = (function(){
     playerHeight:       48,           //how hight is the player (for collision detection)
     movementSpeed:      50,           // how often you move
     movementShift:      3,            //how much player moves for every <movementSpeed>ms
-    collisionSoftness:  4             //px that I let slide during collision detection (so that stuff won't be so hard)
+    collisionSoftness:  4,            //px that I let slide during collision detection (so that stuff won't be so hard)
+    bombTime:           3000          //how much time in ms befor bomb blows (or bums ;P)
   };
 }());
 

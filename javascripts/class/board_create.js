@@ -79,7 +79,7 @@
       passable: true
     }
   ];
-  
+
   var getClassNameForCords = function(x,y){
     return boardValues[board[x][y]].className;
   };
@@ -103,32 +103,12 @@
     }
   };
 
-
-
-  var fromAbsolute = function(absX, absY){
-    var x = Math.floor(absX/32);
-    var y = Math.floor((absY+16)/32);
-    // if (x<0 || x>20 || y<0 || y > 15){
-      // console.log("fromAbsolute(" + absX + ", " + absY + ")=[" + x +", " + y + "]");
-    // }
-    return [x,y];
-  };
   var isPassable = function(coords){
     return boardValues[ board[ coords[0] ][ coords[1] ] ].passable;
   };
   
-  var canMoveTo = function(x,y){
-    var softness = MyApp.params.collisionSoftness;
-    var shift = MyApp.params.tileSize - softness;
-
-    //4 corners for collision detection
-    var topLeft = fromAbsolute(x + softness,y + softness);
-    var topRight = fromAbsolute(x + shift, y + softness);
-    var bottomLeft = fromAbsolute(x + softness, y + shift);
-    var bottomRight = fromAbsolute(x + shift, y + shift);
-
-    // console.log( "board[x,y]="+board[boardCords[0]][boardCords[1]] );
-
+  //4 corners collision detection
+  var canMoveTo = function(topLeft, topRight, bottomLeft, bottomRight){
     return isPassable(topLeft) && isPassable(topRight) && isPassable(bottomLeft) && isPassable(bottomRight);
   };
   MyApp.board.canMoveTo = canMoveTo;

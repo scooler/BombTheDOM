@@ -25,11 +25,13 @@
 .softwall{
   background-image:url('../images/softwall.png');
 }
-
 .bomb{
+  background-image:url('../images/bomb.png');
+}
+.bomb_goodie{
   background-image:url('../images/bonusbomb.png');
 }
-.range{
+.range_goodie{
   background-image:url('../images/bonuspower.png');
 }
 div{

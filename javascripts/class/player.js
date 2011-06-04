@@ -1,6 +1,6 @@
 MyApp.player = function(startX, startY){
   var power = 1;
-  var bombs = 1;
+  var availableBombs = 1;
   var playerElem;
 
   var toAbsolute = function(x,y){
@@ -16,26 +16,30 @@ MyApp.player = function(startX, startY){
     playerElem.style.left = playerAbsPosition[0];
     playerElem.style.top = playerAbsPosition[1];
     playerElem.style.backgroundPosition = "0px 0px";
-    document.body.insertBefore(playerElem, document.body.firstChild);    
+    document.body.insertBefore(playerElem, document.body.firstChild); 
+    return playerElem;   
   };
   playerElem = createPlayerElem();
-
   var movement = MyApp.playerMovement(playerElem);
+
+  var layBomb = function(){
+    if (availableBombs > 0){
+      var x,y;
+      [x,y] = movement.fromAbsolute(parseInt(playerElem.style.left, 10)+16, parseInt(playerElem.style.top, 10)+16);
+      MyApp.bomb(power, x ,y, function(){
+        availableBombs++;
+      });
+    }
+  };
 
   return {
     addBombs: function(){
-      bombs++;
+      availableBombs++;
     },
     addPower: function(){
       power++;
     },
-    layBomb: function(){
-       //TODO   
-    },
-
-    getPower : function(){
-      return power;
-    }, 
+    layBomb : layBomb,
     toAbsolute: toAbsolute,
 
     movement: movement,
