@@ -1,4 +1,13 @@
 MyApp.utils = (function(){
+
+  //I like the ruby-style each
+  Array.prototype.each = function(callback){ 
+  var i; 
+    for (i=0; i<this.length; i++){
+        callback(this[i], i);
+    }
+  };
+
   return {
     random: function(from, to){
       return Math.floor((Math.random()*(to-from+1))+from);

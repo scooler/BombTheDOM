@@ -43,7 +43,7 @@ div{
 .player{
   background-image:url('../images/player1.png');  
 }
-.player-1{
+/*.player-1{
   background-image:url('../images/player1.png');  
   background-position: -32px 0px;
 }
@@ -70,4 +70,31 @@ div{
 .player-7{
   background-image:url('../images/player1.png');  
   background-position: -224px 0px;
+}*/
+.blast_middle{
+  background-image:url('../images/explosion.png');
+}
+.blast_top_down{
+  background-image:url('../images/explosion.png');
+  background-position: 0px -32px;
+}
+.blast_left_right{
+  background-image:url('../images/explosion.png');
+  background-position: 0px -64px;
+}
+.blast_up_end{
+  background-image:url('../images/explosion.png');
+  background-position: 0px -96px;
+}
+.blast_right_end{
+  background-image:url('../images/explosion.png');
+  background-position: 0px -128px;
+}
+.blast_down_end{
+  background-image:url('../images/explosion.png');
+  background-position: 0px -160px;
+}
+.blast_left_end{
+  background-image:url('../images/explosion.png');
+  background-position: 0px -192px;
 }

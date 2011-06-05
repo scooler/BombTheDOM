@@ -1,5 +1,5 @@
 MyApp.player = function(startX, startY){
-  var power = 1;
+  var power = 3;
   var availableBombs = 1;
   var playerElem;
 
