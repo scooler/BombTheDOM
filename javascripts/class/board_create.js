@@ -76,12 +76,14 @@
     3:  {
         className: "bomb-goodie",
         passable: true,
-        bgPossition: "0px 0px"
+        bgPossition: "0px 0px",
+        goodieName: "Bomb"
       },
     4: {
         className: "range-goodie",
         passable: true,
-        bgPossition: "0px 0px"
+        bgPossition: "0px 0px",
+        goodieName: "Power"
       },
     5: {//blast_middle
         className: "blast",
@@ -122,7 +124,12 @@
   board.getDescriptionForType = function(typeNr){
     return boardValues[typeNr];
   };
-  board.getDescription = function(x, y){
+  board.getDescription = function(coords, possibleY){
+    var x = coords, y = possibleY;
+    if (typeof coords === "object"){
+      x = coords[0];
+      y = coords[1];
+    }
     return this.getDescriptionForType(this[x][y]);
   };
 
@@ -170,22 +177,39 @@
     }
   };
 
-  var isPassable = function(coords){
-    return boardValues[ board[ coords[0] ][ coords[1] ] ].passable;
+  var isPassable = function(coords, possibleY){
+    var x = coords, y = possibleY;
+    if (typeof coords === "object"){
+      x = coords[0];
+      y = coords[1];
+    }
+    return board.getDescription(x, y).passable;
   };
   board.isPassable = isPassable;
   
   //4 corners collision detection
-  var canMoveTo = function(topLeft, topRight, bottomLeft, bottomRight){
+  var canMoveTo = function(topLeft, topRight, bottomLeft, bottomRight){ //maybe a 4-point new class :?
     return isPassable(topLeft) && isPassable(topRight) && isPassable(bottomLeft) && isPassable(bottomRight);
   };
+
+  var movingTo = function(player, topLeft, topRight, bottomLeft, bottomRight){
+    var desc = board.getDescription(topLeft);
+    if ( desc.className === "blast" ){
+      player.die();
+    }else if (typeof desc.goodieName !== "undefined" ){
+      MyApp.board.goodiePicked(player, topLeft[0], topLeft[1]);
+    }
+    //TODO rest of them
+  }
 
   board.getElem = function(coords){//try if by id is faster - single access
     return document.getElementById("board").children[coords[1]].children[coords[0]];
   }
 
-  MyApp.boardBombs(board)
+  MyApp.boardBombs(board);
+  MyApp.boardGoodies(board);
 
   MyApp.board.canMoveTo = canMoveTo;
+  MyApp.board.movingTo = movingTo;
   MyApp.utils.addOnLoad(createBoardDOM);
 }());

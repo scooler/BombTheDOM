@@ -1,6 +1,5 @@
 MyApp.playerMovement = function(elem){  
-  var animator, mover;
-
+  var animator, mover, sortOfThis;
   var settings = {
     left: {
       spritePos: "-144px",
@@ -51,7 +50,7 @@ MyApp.playerMovement = function(elem){
     return [x + softness, x + shift, y + softness, y + shift];
   };
 
-  var amIStuck = function(newPos, setting){
+  var movingTo = function(newPos, setting){
     var xLeft, xRight, yTop, yBottom;
     [xLeft, xRight, yTop, yBottom] = getAllCorners(newPos, setting);
 
@@ -59,8 +58,10 @@ MyApp.playerMovement = function(elem){
     var topRight = fromAbsolute(xRight, yTop);
     var bottomLeft = fromAbsolute(xLeft, yBottom);
     var bottomRight = fromAbsolute(xRight, yBottom);
-
-    return ! MyApp.board.canMoveTo(topLeft, topRight, bottomLeft, bottomRight);
+    if (! MyApp.board.canMoveTo(topLeft, topRight, bottomLeft, bottomRight)){
+      return true;
+    }
+    MyApp.board.movingTo(sortOfThis, topLeft, topRight, bottomLeft, bottomRight); //TODO find a way around it
   };
 
   var startMoving = function(setting){
@@ -72,7 +73,7 @@ MyApp.playerMovement = function(elem){
     var animation = function(){
       if (!moving){ return; };
       var newPos = parseInt(elem.style[setting.property], 10) + (shift*setting.direction);
-      if (amIStuck(newPos, setting)){ return; };
+      if (movingTo(newPos, setting)){ return; };
       elem.style[setting.property] = newPos+"px";
       timerHandle = setTimeout(animation, MyApp.params.movementSpeed);
     };
@@ -96,7 +97,7 @@ MyApp.playerMovement = function(elem){
   };
 
   
-  return {
+  sortOfThis = {
     //All these functions are togle - you call it once on key down
     moveDown: function(){
       move("down");
@@ -122,4 +123,5 @@ MyApp.playerMovement = function(elem){
     },
     fromAbsolute: fromAbsolute
   };
+  return sortOfThis;
 };

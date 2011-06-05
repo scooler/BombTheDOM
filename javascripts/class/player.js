@@ -42,6 +42,9 @@ MyApp.player = function(startX, startY){
     addPower: function(){
       power++;
     },
+    die: function(){
+      
+    },
     layBomb : layBomb,
     toAbsolute: toAbsolute,
 
