@@ -23,8 +23,9 @@ MyApp.player = function(startX, startY){
   var movement = MyApp.playerMovement(playerElem);
 
   var layBomb = function(){
+    var x,y, bomb;
     if (availableBombs > 0){
-      var x,y, bomb;
+      availableBombs --;
       [x,y] = movement.fromAbsolute(parseInt(playerElem.style.left, 10)+16, parseInt(playerElem.style.top, 10)+16);
       bomb = MyApp.bomb(x ,y, function(){
         availableBombs++;
