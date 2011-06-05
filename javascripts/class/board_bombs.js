@@ -1,7 +1,18 @@
 MyApp.boardBombs = function(board){ //TODO maybe pass just an object with method, not board itself
   var bombs = {}, bombsToBlow = [], coordsForAnimation = [];
+  var onAnimationEnd = function(newType){
+    return function(elem){
+      var desc = board.getDescriptionForType(newType);
+      var elemCords = elem.id.split("-");
+      elem.className = desc.className;
+      elem.style.backgroundPosition = desc.bgPossition;
+      board[ elemCords[0] ][ elemCords[1] ] = newType;
+    }
+  };
   var blastHitWall = function(x, y){
-    
+    if (board[x][y] === 1){
+      MyApp.utils.animate(board.getElem([x,y]), 4, false, onAnimationEnd(MyApp.board.isThereGoodie(x,y))); 
+    }
   };
 //TODO refactor this somehow but all my tries were worse than this :(
   var bombBlowing = function(x, y, power, onBlast){
@@ -79,14 +90,10 @@ MyApp.boardBombs = function(board){ //TODO maybe pass just an object with method
     });
     board[xCenter][yCenter] = 5;
   };
-  var onBlastEnd = function(elem){
-    var elemCords = elem.id.split("-");
-    elem.className = "";
-    board[ elemCords[0] ][ elemCords[1] ] = 2;
-  };
+
   var animateBlast = function(){
     coordsForAnimation.each(function(cords){ 
-      MyApp.utils.animate(board.getElem(cords), 4, false, onBlastEnd); 
+      MyApp.utils.animate(board.getElem(cords), 4, false, onAnimationEnd(2)); 
     });
     coordsForAnimation = [];
   };

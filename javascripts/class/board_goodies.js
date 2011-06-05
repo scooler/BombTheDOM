@@ -22,7 +22,7 @@
       x = MyApp.utils.random(boardDistance, goodiesSizeX+boardDistance-1);
       y = MyApp.utils.random(boardDistance, goodiesSizeY+boardDistance-1);
       if (typeof goodies[x][y] === "undefined"){
-        goodies[x][y] = MyApp.utils.random(1, MyApp.goodie.length);
+        goodies[x][y] = MyApp.utils.random(3, 4); //TODO set it up so that it gets params from board
         i ++;
       }
     }
@@ -30,7 +30,7 @@
   };
   var isThereGoodie = function(x,y){
     // var distance = MyApp.params.boardDistance;
-    return goodies[x][y] || 0;
+    return goodies[x][y] || 2; // 
   };
 
   goodies = generateGoodies();

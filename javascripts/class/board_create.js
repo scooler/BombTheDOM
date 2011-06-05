@@ -60,7 +60,8 @@
   var boardValues = { 
     0: {
         className: "hardwall",
-        passable: false
+        passable: false,
+        bgPossition: "0px 0px"
       },
     1: {
         className: "softwall",
@@ -69,15 +70,18 @@
       },
     2: {
         className: "",
-        passable: true
+        passable: true,
+        bgPossition: "0px 0px"
       },
     3:  {
-        className: "bomb",
-        passable: true
+        className: "bomb-goodie",
+        passable: true,
+        bgPossition: "0px 0px"
       },
     4: {
-        className: "range",
-        passable: true
+        className: "range-goodie",
+        passable: true,
+        bgPossition: "0px 0px"
       },
     5: {//blast_middle
         className: "blast",
@@ -115,9 +119,15 @@
         bgPossition: "0px -64px"
       }
   };
+  board.getDescriptionForType = function(typeNr){
+    return boardValues[typeNr];
+  };
+  board.getDescription = function(x, y){
+    return this.getDescriptionForType(this[x][y]);
+  };
 
-  var updateBoardElem = function(boardElem, x, y){
-    var desc = boardValues[board[x][y]];
+  var updateBoardElem = function(boardElem, x, y){ //TODO somewhat similar function in board_bombs
+    var desc = board.getDescription(x, y);
     boardElem.className = desc.className
     boardElem.style.backgroundPosition = desc.bgPossition;
   }

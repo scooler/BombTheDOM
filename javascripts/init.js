@@ -32,6 +32,7 @@ MyApp.goodie = {
   "4": "range",
   // "3": "speed",
   // "4": "kick",
-  length: 2
+  length: 2,
+  first: 3
 };
   

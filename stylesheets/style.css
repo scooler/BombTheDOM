@@ -47,3 +47,10 @@ div{
 .blast{
   background-image:url('../images/explosion.png');
 }
+
+.bomb-goodie{
+  background-image:url('../images/bonusbomb.png');  
+}
+.range-goodie{
+  background-image:url('../images/bonuspower.png');  
+}
