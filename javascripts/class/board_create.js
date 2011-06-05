@@ -1,6 +1,5 @@
 (function(){ 
-  var board, boardShadow, bombs = {}; 
-  var bombsToBlow = [];
+  var board, boardShadow; 
   //looks nice, but it isn't dynamic :(
   // [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   // [0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0],
@@ -65,7 +64,8 @@
       },
     1: {
         className: "softwall",
-        passable: false
+        passable: false,
+        bgPossition: "0px 0px"
       },
     2: {
         className: "",
@@ -79,39 +79,48 @@
         className: "range",
         passable: true
       },
-    5: {
-        className: "blast_middle",
-        passable: true
+    5: {//blast_middle
+        className: "blast",
+        passable: true,
+        bgPossition: "0px 0px"
       },
-    6: {
-        className: "blast_left_end",
-        passable: true
+    6: {//blast_left_end
+        className: "blast",
+        passable: true,
+        bgPossition: "0px -192px"
       },
-    7: {
-        className: "blast_up_end",
-        passable: true
+    7: {//blast_up_end
+        className: "blast",
+        passable: true,
+        bgPossition: "0px -96px"
       },
-    8: {
-        className: "blast_right_end",
-        passable: true
+    8: {//blast_right_end
+        className: "blast",
+        passable: true,
+        bgPossition: "0px -128px"
       },
-    9: {
-        className: "blast_down_end",
-        passable: true
+    9: {//blast_down_end
+        className: "blast",
+        passable: true,
+        bgPossition: "0px -160px"
       },
-    10: {
-        className: "blast_top_down",
-        passable: true
+    10: {//blast_top_down
+        className: "blast",
+        passable: true,
+        bgPossition: "0px -32px"
       },
-    11: {
-        className: "blast_left_right",
-        passable: true
+    11: {//blast_left_right
+        className: "blast",
+        passable: true,
+        bgPossition: "0px -64px"
       }
   };
 
-  var getClassNameForCords = function(x,y){
-    return boardValues[board[x][y]].className;
-  };
+  var updateBoardElem = function(boardElem, x, y){
+    var desc = boardValues[board[x][y]];
+    boardElem.className = desc.className
+    boardElem.style.backgroundPosition = desc.bgPossition;
+  }
 
   var createBoardDOM = function(){
     var board = document.getElementById("board");
@@ -125,7 +134,8 @@
       trElem = document.createElement("tr");
       for (j=0; j<boardWidth; j++){
         tdElem=document.createElement("td");
-        tdElem.className = getClassNameForCords(j, i);
+        tdElem.id = j + "-" + i;
+        updateBoardElem(tdElem, j, i);
         trElem.appendChild(tdElem);
       }
       board.appendChild(trElem);
@@ -133,14 +143,14 @@
   };
 
 //first do stupid total repaint - than make shadow table
-  var repaintBoard = function(){
+  board.repaint = function(){
     var i,j;
     var boardWidth = MyApp.params.boardWidth;
     var boardHeight = MyApp.params.boardHeight;
     var currentTR = document.getElementById("board").firstChild, currentTD = currentTR.firstChild;
     for (i=0; i<boardHeight; i++){
       for (j=0; j<boardWidth; j++){
-        currentTD.className = getClassNameForCords(j, i);
+        updateBoardElem(currentTD, j, i);
         currentTD = currentTD.nextSibling;
       }
       currentTR = currentTR.nextSibling;
@@ -153,102 +163,19 @@
   var isPassable = function(coords){
     return boardValues[ board[ coords[0] ][ coords[1] ] ].passable;
   };
+  board.isPassable = isPassable;
   
   //4 corners collision detection
   var canMoveTo = function(topLeft, topRight, bottomLeft, bottomRight){
     return isPassable(topLeft) && isPassable(topRight) && isPassable(bottomLeft) && isPassable(bottomRight);
   };
 
-  var blastHitWall = function(x, y){
-    
-  };
-//TODO refactor this somehow but all my tries were worse than this :(
-  var bombBlowing = function(x, y, power, onBlast){
-    var i, lastI;
-    for (i = x; i <= x + power; i++){
-      if (isPassable([i,y])){
-        onBlast(i, y, 11);
-        lastI = i;
-      } else {
-        blastHitWall(i, y);
-        break;
-      }
-    }
-    onBlast(lastI, y, 8);
-    lastI = undefined;
+  board.getElem = function(coords){//try if by id is faster - single access
+    return document.getElementById("board").children[coords[1]].children[coords[0]];
+  }
 
-    for (i = x-1; i >= x - power; i--){
-      if (isPassable([i,y])){
-        onBlast(i, y, 11);
-        lastI = i;
-      } else {
-        blastHitWall(i, y);
-        break;
-      }
-    }
-    if (typeof lastI === "number"){
-      onBlast(lastI, y, 6);
-      lastI = undefined;
-    }
-
-    for (i = y+1; i <= y + power; i++){
-      if (isPassable([x, i])){
-        onBlast(x, i, 10);
-        lastI = i;
-      } else {
-        blastHitWall(x, i);
-        break;
-      }
-    }
-    if (typeof lastI === "number"){
-      onBlast(x, lastI, 9);
-      lastI = undefined;
-    }
-
-    for (i = y-1; i >= y - power; i--){
-      if (isPassable([x, i])){
-        onBlast(x, i, 10);
-        lastI = i;
-      } else {
-        blastHitWall(x, i);
-        break;
-      }
-    }
-    if (typeof lastI === "number"){
-      onBlast(x, lastI, 7);
-    }
-  };
-  var bombChainingCollect = function(x, y){
-    if (typeof bombs[[x, y]] === "object"){
-      bombsToBlow.push(bombs[[x, y]]);
-      delete bombs[[x, y]];
-    }
-  };
-  var bombChainingExplode = function(){
-    bombsToBlow.each(function(bomb){ bomb.bum(); });
-  };
-  var bombAction = function(xCenter, yCenter, power){
-    var lastRight, lastLeft, lastUp,lastDown;
-    bombBlowing(xCenter, yCenter, power, function(x, y, blastTypeNr){
-      board[x][y] = blastTypeNr;
-      bombChainingCollect(x, y);
-      //TODO bomb killing :P
-    });
-    board[xCenter][yCenter] = 5;
-  };
-
-  var bombBumed = function(x, y, power){
-    delete bombs[[x, y]];
-    bombAction(x, y, power); 
-    repaintBoard();
-    bombChainingExplode();
-  };
-  var bombSetup = function(bomb){
-    bombs[bomb.getCords()] = bomb;
-  };
+  MyApp.boardBombs(board)
 
   MyApp.board.canMoveTo = canMoveTo;
-  MyApp.board.bombBumed = bombBumed;
-  MyApp.board.bombSetup = bombSetup;  
   MyApp.utils.addOnLoad(createBoardDOM);
 }());

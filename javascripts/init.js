@@ -28,8 +28,8 @@ MyApp.params = (function(){
 }());
 
 MyApp.goodie = {
-  "1": "bomb",
-  "2": "range",
+  "3": "bomb",
+  "4": "range",
   // "3": "speed",
   // "4": "kick",
   length: 2

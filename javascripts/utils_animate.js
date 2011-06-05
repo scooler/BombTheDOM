@@ -9,7 +9,7 @@
     
     MyApp.utils.changeBgPossitionX = changeBgPossitionX;
     MyApp.utils.changeBgPossitionY = changeBgPossitionY;
-    MyApp.utils.animate = function(elem, steps, cyclic){
+    MyApp.utils.animate = function(elem, steps, cyclic, callback){
     var countUp = 0;
     if (typeof elem.animator === "object"){
       elem.animator.stopAnimation();
@@ -20,7 +20,12 @@
       if (animationStoped){ return };
       countUp ++;
       if (countUp === steps){
-        if (!cyclic){ return }
+        if (!cyclic){ 
+          if (typeof callback === "function"){
+            callback(elem);
+          }
+          return; 
+        }
         countUp = 0;
       }
       changeBgPossitionX(elem, countUp * -32);
