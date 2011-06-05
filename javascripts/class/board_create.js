@@ -1,5 +1,5 @@
 (function(){ 
-  var board; 
+  var board, bombs = {}; 
   //looks nice, but it isn't dynamic :(
   // [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   // [0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0],
@@ -77,6 +77,34 @@
     { //4
       className: "range",
       passable: true
+    },
+    { //5
+      className: "blast_middle",
+      passable: true
+    },
+    { //6
+      className: "blast_left_end",
+      passable: true
+    },
+    { //7
+      className: "blast_up_end",
+      passable: true
+    },
+    { //8
+      className: "blast_right_end",
+      passable: true
+    },
+    { //9
+      className: "blast_down_end",
+      passable: true
+    },
+    { //10
+      className: "blast_top_down",
+      passable: true
+    },
+    { //11
+      className: "blast_left_right",
+      passable: true
     }
   ];
 
@@ -103,6 +131,11 @@
     }
   };
 
+//first do stupid total repaint - than make shadow table
+  var repaintBoard = function(){
+    
+  };
+
   var isPassable = function(coords){
     return boardValues[ board[ coords[0] ][ coords[1] ] ].passable;
   };
@@ -111,6 +144,78 @@
   var canMoveTo = function(topLeft, topRight, bottomLeft, bottomRight){
     return isPassable(topLeft) && isPassable(topRight) && isPassable(bottomLeft) && isPassable(bottomRight);
   };
+
+//TODO refactor this somehow but all my tries were worse than this :(
+  var bombBlowing = function(x, y, power, callback){
+    var i, lastI;
+    for (i = x; i <= x + power; i++){
+      if (isPassable(i,y)){
+        callback(i, y, 11);
+        lastI = i;
+      } else {
+        blastHitWall(i, y);
+        break;
+      }
+    }
+    callback(lastI, y, 8);
+
+    for (i = x-1; i >= x - power; i--){
+      if (isPassable(i,y)){
+        callback(i, y, 11);
+        lastI = i;
+      } else {
+        blowHitWall(i, y);
+        break;
+      }
+    }
+    callback(lastI, y, 6);
+
+    for (i = y+1; i <= y + power; i++){
+      if (isPassable(x, i)){
+        callback(x, i, 10);
+        lastI = i;
+      } else {
+        blowHitWall(x, i);
+        break;
+      }
+    }
+    callback(lastI, y, 9);
+
+    for (i = y-1; i >= y - power; i--){
+      if (isPassable(x, i)){
+        callback(x, i, 10);
+        lastI = i;
+      } else {
+        blowHitWall(x, i);
+        break;
+      }
+    }
+    callback(lastI, y, 7);
+  };
+  var bombChaining = function(x, y){
+    if (typeof bombs[[x,y]] === "object"){
+      bombs[[x,y]].bum();
+    }
+  };
+  var bombAction = function(xCenter, yCenter, power){
+    var lastRight, lastLeft, lastUp,lastDown;
+    bombBlowing(xCenter, yCenter, power, function(x, y, blastNr){
+      board[x][y] = blastNr;
+      bombChaining(x, y);
+      //TODO bomb killing :P
+    });
+    repaintBoard();
+  };
+
+  var bombBumed = function(x, y, power){
+    delete bombs[[x,y]];
+    bombAction(x, y, power); //in this order so new animation override old onces when chaining
+  };
+  var bombSetup = function(bomb){
+    bombs[bomb.getCords()] = bomb;
+  };
+
   MyApp.board.canMoveTo = canMoveTo;
+  MyApp.board.bombBumed = bombBumed;
   MyApp.utils.addOnLoad(createBoardDOM);
 }());

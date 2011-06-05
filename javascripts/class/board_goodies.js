@@ -34,5 +34,6 @@
   };
 
   goodies = generateGoodies();
+  //TODO hide this method , I think board should not be singleton - rather one instance passed to all players in game
   MyApp.board.isThereGoodie = isThereGoodie;
 }());

@@ -1,6 +1,6 @@
-MyApp.bomb = function(power, startX, startY, bumCallback){
+MyApp.bomb = function(startX, startY, bumCallback){
   var bombElem;
-  var animator; //TODO
+  var animator;
   var bumed = false;
 
   var createBombElem = function(){
@@ -13,18 +13,24 @@ MyApp.bomb = function(power, startX, startY, bumCallback){
     document.body.insertBefore(bombElem, document.body.firstChild);    
     return bombElem;
   };
+
   bombElem = createBombElem();
+  animator = MyApp.utils.animate(bombElem, 4, true);
 
   var bum = function(){
     if (!bumed){
       bumed = true;
+      animator.stopAnimation();
       bombElem.parentNode.removeChild(bombElem);
-      delete bombElem;
       bumCallback();
     }
   };
   setTimeout(bum, MyApp.params.bombTime);
   return {    
-    bum: bum
+    bum: bum,
+    getCords: function(){
+      return [startX, startY];
+    }
+
   };
 };
