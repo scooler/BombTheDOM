@@ -1,6 +1,6 @@
 MyApp.player = function(startX, startY){
   var power = 3;
-  var availableBombs = 1;
+  var availableBombs = 3;
   var playerElem;
 
   var toAbsolute = function(x,y){
@@ -24,9 +24,9 @@ MyApp.player = function(startX, startY){
 
   var layBomb = function(){
     var x,y, bomb;
-    if (availableBombs > 0){
+    [x,y] = movement.fromAbsolute(parseInt(playerElem.style.left, 10)+16, parseInt(playerElem.style.top, 10)+16);
+    if (availableBombs > 0 && MyApp.board.canLayBombOn(x, y)){
       availableBombs --;
-      [x,y] = movement.fromAbsolute(parseInt(playerElem.style.left, 10)+16, parseInt(playerElem.style.top, 10)+16);
       bomb = MyApp.bomb(x ,y, function(){
         availableBombs++;
         MyApp.board.bombBumed(x, y, power);

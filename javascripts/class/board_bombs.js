@@ -109,6 +109,14 @@ MyApp.boardBombs = function(board){ //TODO maybe pass just an object with method
     bombs[bomb.getCords()] = bomb;
   };
 
+  var canLayBombOn = function(x, y){
+    if (typeof bombs[[x, y]] === "object"){
+      return false;
+    }
+    return true;
+  };
+
+  MyApp.board.canLayBombOn = canLayBombOn;
   MyApp.board.bombBumed = bombBumed;
   MyApp.board.bombSetup = bombSetup;  
 };
