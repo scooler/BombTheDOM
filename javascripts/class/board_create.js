@@ -77,7 +77,7 @@
         className: "bomb-goodie",
         passable: true,
         bgPossition: "0px 0px",
-        goodieName: "Bomb"
+        goodieName: "Bombs"
       },
     4: {
         className: "range-goodie",

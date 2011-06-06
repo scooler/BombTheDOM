@@ -1,5 +1,5 @@
-MyApp.playerMovement = function(elem){  
-  var animator, mover, sortOfThis;
+MyApp.playerMovement = function(elem, sortOfThis){  
+  var animator, mover;
   var settings = {
     left: {
       spritePos: "-144px",
@@ -97,7 +97,7 @@ MyApp.playerMovement = function(elem){
   };
 
   
-  sortOfThis = {
+  return {
     //All these functions are togle - you call it once on key down
     moveDown: function(){
       move("down");
@@ -123,5 +123,4 @@ MyApp.playerMovement = function(elem){
     },
     fromAbsolute: fromAbsolute
   };
-  return sortOfThis;
 };
