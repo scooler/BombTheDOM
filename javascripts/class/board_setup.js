@@ -1,6 +1,13 @@
 MyApp.setupBoard = function(board){ 
   var boardShadow; 
 
+
+
+
+
+
+
+
   var updateBoardElem = function(boardElem, x, y){ //TODO somewhat similar function in board_bombs
     var desc = board.getDescription(x, y);
     boardElem.className = desc.className
@@ -60,33 +67,14 @@ MyApp.setupBoard = function(board){
     return isPassable(topLeft) && isPassable(topRight) && isPassable(bottomLeft) && isPassable(bottomRight);
   };
 
-//  board.findPlayer = function(x, y){
-//    var result = [];
-//    for (var player in playersPosition){
-//      for (var cords in playersPosition[player]){
-//        if (x === playersPosition[player][cords][0] && y === playersPosition[player][cords][1]){
-//          result.push(player);
-//        }
-//      }
-//    }
-//    return result;
-//  }
-
-
-  var handleMoving = function(player){
-    return function(cords){      
-      var desc = board.getDescription(cords);
-      if ( desc.className === "blast" ){
-        player.die();
-      }else if (typeof desc.goodieName !== "undefined" ){
-        MyApp.board.goodiePicked(player, cords[0], cords[1]);
-      }
-    }
-  };
-
   var movingTo = function(player, topLeft, topRight, bottomLeft, bottomRight){
-    //playersPosition[player] = [topLeft, topRight, bottomLeft, bottomRight];
-    [topLeft, topRight, bottomLeft, bottomRight].each(handleMoving(player));
+    var desc = board.getDescription(topLeft);
+    if ( desc.className === "blast" ){
+      player.die();
+    }else if (typeof desc.goodieName !== "undefined" ){
+      MyApp.board.goodiePicked(player, topLeft[0], topLeft[1]);
+    }
+    //TODO rest of them
   }
 
   board.getElem = function(coords){//try if by id is faster - single access

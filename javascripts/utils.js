@@ -8,10 +8,16 @@ MyApp.utils = (function(){
     }
   };
 
+  var toAbsolute = function(x,y){
+    var tileSize = MyApp.params.tileSize;
+    return [x*tileSize, y*tileSize];
+  };
+
   return {
     random: function(from, to){
       return Math.floor((Math.random()*(to-from+1))+from);
-    }
+    },
+    toAbsolute : toAbsolute;
   };
 }());
 

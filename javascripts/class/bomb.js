@@ -4,7 +4,7 @@ MyApp.bomb = function(startX, startY, bumCallback){
   var bumed = false;
 
   var createBombElem = function(){
-    var bombAbsPosition = MyApp.board.toAbsolute(startX, startY);
+    var bombAbsPosition = MyApp.utils.toAbsolute(startX, startY);
     var bombElem = document.createElement("div");
     bombElem.className = "bomb";
     bombElem.style.left = bombAbsPosition[0];

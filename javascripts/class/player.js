@@ -19,7 +19,7 @@ MyApp.player = function(startX, startY, number){
     }
   };
   var toAbsolute = function(x,y){
-    var result = MyApp.board.toAbsolute(x,y);
+    var result = MyApp.utils.toAbsolute(x,y);
     result[1] = result[1]-16; //player is 32x48 - taller than normal tiles
     return result;
   };
