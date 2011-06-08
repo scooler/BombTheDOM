@@ -1,4 +1,4 @@
-MyApp.player = function(startX, startY){
+MyApp.player = function(startX, startY, number){
   var power = 3;
   var availableBombs = 3;
   var movement;
@@ -13,6 +13,9 @@ MyApp.player = function(startX, startY){
     die: function(){
       sortOfThis.stop();
       playerElem.parentNode.removeChild(playerElem); 
+    },
+    getNumber: function(){
+      return number;
     }
   };
   var toAbsolute = function(x,y){

@@ -5,7 +5,7 @@ MyApp.game = (function(){
     var playersPossitions = MyApp.board.getPlayersStartPossition();
     var i;
     for (i=0 ; i<playersNumer; i++){
-      players.push(MyApp.player(playersPossitions[i][0], playersPossitions[i][1]));
+      players.push(MyApp.player(playersPossitions[i][0], playersPossitions[i][1], i));
     }
     MyApp.io.setPlayers(players);
   };

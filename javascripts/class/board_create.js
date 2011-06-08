@@ -1,5 +1,6 @@
 (function(){ 
   var board, boardShadow; 
+  var playersPosition = {};
   //looks nice, but it isn't dynamic :(
   // [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   // [0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0],
@@ -192,14 +193,33 @@
     return isPassable(topLeft) && isPassable(topRight) && isPassable(bottomLeft) && isPassable(bottomRight);
   };
 
-  var movingTo = function(player, topLeft, topRight, bottomLeft, bottomRight){
-    var desc = board.getDescription(topLeft);
-    if ( desc.className === "blast" ){
-      player.die();
-    }else if (typeof desc.goodieName !== "undefined" ){
-      MyApp.board.goodiePicked(player, topLeft[0], topLeft[1]);
+  board.findPlayer = function(x, y){
+    var result = [];
+    for (var player in playersPosition){
+      for (var cords in playersPosition[player]){
+        if (x === playersPosition[player][cords][0] && y === playersPosition[player][cords][1]){
+          result.push(player);
+        }
+      }
     }
-    //TODO rest of them
+    return result;
+  }
+
+
+  var handleMoving = function(player){
+    return function(cords){      
+      var desc = board.getDescription(cords);
+      if ( desc.className === "blast" ){
+        player.die();
+      }else if (typeof desc.goodieName !== "undefined" ){
+        MyApp.board.goodiePicked(player, cords[0], cords[1]);
+      }
+    }
+  };
+
+  var movingTo = function(player, topLeft, topRight, bottomLeft, bottomRight){
+    playersPosition[player] = [topLeft, topRight, bottomLeft, bottomRight];
+    [topLeft, topRight, bottomLeft, bottomRight].each(handleMoving(player));
   }
 
   board.getElem = function(coords){//try if by id is faster - single access

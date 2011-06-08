@@ -80,13 +80,19 @@ MyApp.boardBombs = function(board){ //TODO maybe pass just an object with method
     bombsToBlow.each(function(bomb){ bomb.bum(); });
     bombsToBlow = [];
   };
+
+  var bombKilling = function(x, y){
+    board.findPlayer(x, y).each(function(player){
+      player.die();
+    });
+  };
   var bombAction = function(xCenter, yCenter, power){
     var lastRight, lastLeft, lastUp,lastDown;
     bombBlowing(xCenter, yCenter, power, function(x, y, blastTypeNr){
       board[x][y] = blastTypeNr;
       bombChainingCollect(x, y);
       coordsForAnimation.push([x,y]);
-      //TODO bomb killing :P
+      bombKilling(x, y);
     });
     board[xCenter][yCenter] = 5;
   };

@@ -41,23 +41,27 @@ MyApp.playerMovement = function(elem, sortOfThis){
     return [x,y];
   };
 
-  var getAllCorners = function(newPos, setting){
-    var x,y;
-    [x,y] = getNewCoords(newPos, setting);
+  var getAllCorners = function(possibleX, possibleY){
+    var x = possibleX,y = possibleY;
+    if (typeof possibleX === "object"){
+      x = possibleX[0];
+      y = possibleX[1];
+    }
     var softness = MyApp.params.collisionSoftness;
     var shift = MyApp.params.tileSize - softness;
 
-    return [x + softness, x + shift, y + softness, y + shift];
+    var topLeft = fromAbsolute(x + softness, y + softness);
+    var topRight = fromAbsolute(x + shift, y + softness);
+    var bottomLeft = fromAbsolute(x + softness, y + shift);
+    var bottomRight = fromAbsolute(x + shift, y + shift);
+    return [topLeft, topRight, bottomLeft, bottomRight];
   };
 
   var movingTo = function(newPos, setting){
-    var xLeft, xRight, yTop, yBottom;
-    [xLeft, xRight, yTop, yBottom] = getAllCorners(newPos, setting);
+    var topLeft, topRight, bottomLeft, bottomRight;
+    [topLeft, topRight, bottomLeft, bottomRight] = getAllCorners(getNewCoords(newPos, setting));
 
-    var topLeft = fromAbsolute(xLeft, yTop);
-    var topRight = fromAbsolute(xRight, yTop);
-    var bottomLeft = fromAbsolute(xLeft, yBottom);
-    var bottomRight = fromAbsolute(xRight, yBottom);
+
     if (! MyApp.board.canMoveTo(topLeft, topRight, bottomLeft, bottomRight)){
       return true;
     }
@@ -96,6 +100,11 @@ MyApp.playerMovement = function(elem, sortOfThis){
     mover = startMoving(movementSettings);
   };
 
+  // var fieldsImOn = function(){
+  //   var y = parseInt(elem.style.top, 10);
+  //   var x =  parseInt(elem.style.left, 10);
+  //   return getAllCorners(x, y)
+  // }
   
   return {
     //All these functions are togle - you call it once on key down
@@ -122,5 +131,6 @@ MyApp.playerMovement = function(elem, sortOfThis){
       // console.log("stop()");
     },
     fromAbsolute: fromAbsolute
+    // fieldsImOn: fieldsImOn
   };
 };
