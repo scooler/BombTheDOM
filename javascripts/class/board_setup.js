@@ -1,6 +1,13 @@
 MyApp.setupBoard = function(board){ 
   var boardShadow; 
 
+
+
+
+
+
+
+
   var updateBoardElem = function(boardElem, x, y){ //TODO somewhat similar function in board_bombs
     var desc = board.getDescription(x, y);
     boardElem.className = desc.className

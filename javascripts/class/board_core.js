@@ -1,4 +1,5 @@
-MyApp.board = function(board){
+MyApp.board = (function(){
+  var board;
   //looks nice, but it isn't dynamic :(
   // [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   // [0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0],
@@ -48,15 +49,80 @@ MyApp.board = function(board){
     for (i=0; i<boardWidth; i++){
       board.push([]);
       for (j=0; j<boardHeight; j++){
-        board[i][j] = initialBoardSetup(i, j);
+        board[i][j] = initialBoard(i, j);
       }
     }
     return board;
   };
   board = initiateBoard();
 
+
+  var boardValues = { 
+    0: {
+        className: "hardwall",
+        passable: false,
+        bgPossition: "0px 0px"
+      },
+    1: {
+        className: "softwall",
+        passable: false,
+        bgPossition: "0px 0px"
+      },
+    2: {
+        className: "",
+        passable: true,
+        bgPossition: "0px 0px"
+      },
+    3:  {
+        className: "bomb-goodie",
+        passable: true,
+        bgPossition: "0px 0px",
+        goodieName: "Bombs"
+      },
+    4: {
+        className: "range-goodie",
+        passable: true,
+        bgPossition: "0px 0px",
+        goodieName: "Power"
+      },
+    5: {//blast_middle
+        className: "blast",
+        passable: true,
+        bgPossition: "0px 0px"
+      },
+    6: {//blast_left_end
+        className: "blast",
+        passable: true,
+        bgPossition: "0px -192px"
+      },
+    7: {//blast_up_end
+        className: "blast",
+        passable: true,
+        bgPossition: "0px -96px"
+      },
+    8: {//blast_right_end
+        className: "blast",
+        passable: true,
+        bgPossition: "0px -128px"
+      },
+    9: {//blast_down_end
+        className: "blast",
+        passable: true,
+        bgPossition: "0px -160px"
+      },
+    10: {//blast_top_down
+        className: "blast",
+        passable: true,
+        bgPossition: "0px -32px"
+      },
+    11: {//blast_left_right
+        className: "blast",
+        passable: true,
+        bgPossition: "0px -64px"
+      }
+  };
   board.getDescriptionForType = function(typeNr){
-    return board.getBoardValues()[typeNr];
+    return boardValues[typeNr];
   };
   board.getDescription = function(coords, possibleY){
     var x = coords, y = possibleY;
@@ -67,7 +133,4 @@ MyApp.board = function(board){
     return board.getDescriptionForType(board[x][y]);
   };
 
-  MyApp.setupBoard(board);
-  
-  return board;
-};
+}());
