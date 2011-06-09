@@ -11,7 +11,7 @@ MyApp.boardBombs = function(board){ //TODO maybe pass just an object with method
   };
   var blastHitWall = function(x, y){
     if (board[x][y] === 1){
-      MyApp.utils.animate(board.getElem([x,y]), 4, false, onAnimationEnd(MyApp.board.isThereGoodie(x,y))); 
+      MyApp.utils.animate(board.getElem([x,y]), 4, false, onAnimationEnd(board.isThereGoodie(x,y))); 
     }
   };
 //TODO refactor this somehow but all my tries were worse than this :(
@@ -122,7 +122,8 @@ MyApp.boardBombs = function(board){ //TODO maybe pass just an object with method
     return true;
   };
 
-  MyApp.board.canLayBombOn = canLayBombOn;
-  MyApp.board.bombBumed = bombBumed;
-  MyApp.board.bombSetup = bombSetup;  
+  board.bomb = {};
+  board.bomb.canLayOn = canLayBombOn;
+  board.bomb.bumed = bombBumed;
+  board.bomb.setup = bombSetup;  
 };

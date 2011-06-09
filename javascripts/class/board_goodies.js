@@ -44,8 +44,8 @@ MyApp.boardGoodies = function(board){
     board.repaint();
   };
   goodies = generateGoodies();
-  //TODO hide this method , I think board should not be singleton - rather one instance passed to all players in game
-  MyApp.board.isThereGoodie = isThereGoodie;
-  MyApp.board.goodiePicked = goodiePicked;
-  MyApp.board.goodieDestroyed = goodieDestroyed;
+  
+  board.isThereGoodie = isThereGoodie;
+  board.goodiePicked = goodiePicked;
+  board.goodieDestroyed = goodieDestroyed;
 };

@@ -1,4 +1,4 @@
-MyApp.playerMovement = function(elem, sortOfThis){  
+MyApp.playerMovement = function(elem, sortOfThis, boardMoving){  
   var animator, mover;
   var settings = {
     left: {
@@ -23,12 +23,6 @@ MyApp.playerMovement = function(elem, sortOfThis){
     }
   };
 
-  var fromAbsolute = function(absX, absY){
-    var x = Math.floor(absX/32);
-    var y = Math.floor((absY+16)/32);
-    return [x,y];
-  };
-
   var getNewCoords = function(newPos, setting){
     var x,y;
     if (setting.property === "left"){
@@ -41,31 +35,15 @@ MyApp.playerMovement = function(elem, sortOfThis){
     return [x,y];
   };
 
-  var getAllCorners = function(possibleX, possibleY){
-    var x = possibleX,y = possibleY;
-    if (typeof possibleX === "object"){
-      x = possibleX[0];
-      y = possibleX[1];
-    }
-    var softness = MyApp.params.collisionSoftness;
-    var shift = MyApp.params.tileSize - softness;
-
-    var topLeft = fromAbsolute(x + softness, y + softness);
-    var topRight = fromAbsolute(x + shift, y + softness);
-    var bottomLeft = fromAbsolute(x + softness, y + shift);
-    var bottomRight = fromAbsolute(x + shift, y + shift);
-    return [topLeft, topRight, bottomLeft, bottomRight];
-  };
-
   var movingTo = function(newPos, setting){
     var topLeft, topRight, bottomLeft, bottomRight;
-    [topLeft, topRight, bottomLeft, bottomRight] = getAllCorners(getNewCoords(newPos, setting));
+    [topLeft, topRight, bottomLeft, bottomRight] = sortOfThis.getAllCorners(getNewCoords(newPos, setting));
 
 
-    if (! MyApp.board.canMoveTo(topLeft, topRight, bottomLeft, bottomRight)){
+    if (! boardMoving.canMoveTo(topLeft, topRight, bottomLeft, bottomRight)){
       return true;
     }
-    MyApp.board.movingTo(sortOfThis, topLeft, topRight, bottomLeft, bottomRight); //TODO find a way around it
+    boardMoving.movingTo(sortOfThis, topLeft, topRight, bottomLeft, bottomRight); //TODO find a way around it
   };
 
   var startMoving = function(setting){
@@ -99,38 +77,28 @@ MyApp.playerMovement = function(elem, sortOfThis){
     animator = MyApp.utils.animate(elem, 8, true);
     mover = startMoving(movementSettings);
   };
-
-  // var fieldsImOn = function(){
-  //   var y = parseInt(elem.style.top, 10);
-  //   var x =  parseInt(elem.style.left, 10);
-  //   return getAllCorners(x, y)
-  // }
   
-  return {
     //All these functions are togle - you call it once on key down
-    moveDown: function(){
-      move("down");
-    },
-    moveUp: function(){
-      move("up");
-    },
-    moveRight: function(){
-      move("right");
-    },
-    moveLeft: function(){
-      move("left");
-    },
-    stop: function(){
-      if (typeof animator === "object"){
-        animator.stopAnimation();
-      }
-      if (typeof mover === "object"){
-        mover.stopMovement();
-      }
-      // console.log(elem);
-      // console.log("stop()");
-    },
-    fromAbsolute: fromAbsolute
-    // fieldsImOn: fieldsImOn
+  sortOfThis.moveDown = function(){
+    move("down");
+  };
+  sortOfThis.moveUp = function(){
+    move("up");
+  };
+  sortOfThis.moveRight = function(){
+    move("right");
+  };
+  sortOfThis.moveLeft = function(){
+    move("left");
+  };
+  sortOfThis.stop = function(){
+    if (typeof animator === "object"){
+      animator.stopAnimation();
+    }
+    if (typeof mover === "object"){
+      mover.stopMovement();
+    }
+    // console.log(elem);
+    // console.log("stop()");
   };
 };

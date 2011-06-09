@@ -1,18 +1,14 @@
 MyApp.game = (function(){
-  var players = [];
-  var createPlayers = function(){
-    var playersNumer = MyApp.params.playersNumer;
-    var playersPossitions = MyApp.board.getPlayersStartPossition();
-    var i;
-    for (i=0 ; i<playersNumer; i++){
-      players.push(MyApp.player(playersPossitions[i][0], playersPossitions[i][1], i));
+  var board;
+  var veryBasicBoard = function(){
+    var result = [];
+    result.getBoardValues = function(){
+      return boardValues;
     }
-    MyApp.io.setPlayers(players);
+    return result;
   };
-  MyApp.utils.addOnLoad(createPlayers);
 
-  MyApp.utils.addCallback("keydown", MyApp.io.keyDown);
-  MyApp.utils.addCallback("keyup", MyApp.io.keyUp);
+  board = MyApp.board(veryBasicBoard());
 
   var boardValues = { 
     0: {
@@ -79,14 +75,19 @@ MyApp.game = (function(){
       }
   };
   
-  var veryBasicBoard = function(){
-    var result = [];
-    result.getBoardValues = function(){
-      return boardValues;
+  board.getDescriptionForType = function(typeNr){
+    return board.getBoardValues()[typeNr];
+  };
+  board.getDescription = function(coords, possibleY){
+    var x = coords, y = possibleY;
+    if (typeof coords === "object"){
+      x = coords[0];
+      y = coords[1];
     }
-    return result;
+    return board.getDescriptionForType(board[x][y]);
   };
 
-  var board = MyApp.board(veryBasicBoard());
-  // return {};
+
+  MyApp.utils.addCallback("keydown", MyApp.io.keyDown);
+  MyApp.utils.addCallback("keyup", MyApp.io.keyUp);
 }());

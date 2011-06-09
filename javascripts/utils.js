@@ -17,7 +17,7 @@ MyApp.utils = (function(){
     random: function(from, to){
       return Math.floor((Math.random()*(to-from+1))+from);
     },
-    toAbsolute : toAbsolute;
+    toAbsolute : toAbsolute
   };
 }());
 

@@ -1,4 +1,6 @@
 MyApp.boardPlayers = function(board){
+  var players = [];
+
   var boardPlayersPossitions = function(){
     var boardWidth = MyApp.params.boardWidth;
     var boardHeight = MyApp.params.boardHeight;
@@ -15,8 +17,36 @@ MyApp.boardPlayers = function(board){
     return result;
   };
 
-  
-  board.getPlayersStartPossition = getPlayersStartPossition;
+  board.findPlayer = function(x, y){
+    var result = []
+    var i, j, cords;
+    console.log(players);
+    for (i = 0; i < players.length; i++){
+      console.log(players[i]);
 
+      cords = players[i].getAllCorners();
+      for (j = 0; j< cords; j++){
+        if (x === cords[j][0] && y === cords[j][1]){
+          result.push(player); //TODO maybe remove duplicates - players can die more than once now :D
+        }
+      }
+    }
+    return result;
+  }
+
+
+  var createPlayers = function(){
+    var playersNumer = MyApp.params.playersNumer;
+    var playersPossitions = board.getPlayersStartPossition();
+    var i;
+    for (i=0 ; i<playersNumer; i++){
+      players.push(MyApp.player(playersPossitions[i][0], playersPossitions[i][1], i, board.bomb, board.moving));
+    }
+    // TODO maybe I should add board, with apropriate method
+    MyApp.io.setPlayers(players);
   };
+  MyApp.utils.addOnLoad(createPlayers);
+
+  board.getPlayersStartPossition = getPlayersStartPossition;
+  
 };
