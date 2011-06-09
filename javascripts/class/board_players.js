@@ -24,10 +24,10 @@ MyApp.boardPlayers = function(board){
     for (i = 0; i < players.length; i++){
       console.log(players[i]);
 
-      cords = players[i].getAllCorners();
-      for (j = 0; j< cords; j++){
+      cords = players[i].getPossition();
+      for (j = 0; j < cords.length; j++){
         if (x === cords[j][0] && y === cords[j][1]){
-          result.push(player); //TODO maybe remove duplicates - players can die more than once now :D
+          result.push(players[i]); //TODO maybe remove duplicates - players can die more than once now :D
         }
       }
     }
