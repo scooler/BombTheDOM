@@ -1,4 +1,9 @@
 MyApp.board = function(board){
+  MyApp.params.boardWidth = 20;   //in 32px filds
+  MyApp.params.boardHeight = 15;  //in 32px filds
+  MyApp.params.boardDistance = 2; //in 32px fields of empty space between hardwall on side and softwall in middle
+  MyApp.params.boardGoodies = 35; //how many goodies should be on board
+
   //looks nice, but it isn't dynamic :(
   // [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   // [0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0],
