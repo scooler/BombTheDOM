@@ -72,7 +72,6 @@ MyApp.setupBoard = function(board){
   };
 
   var movingTo = function(player, topLeft, topRight, bottomLeft, bottomRight){
-    //playersPosition[player] = [topLeft, topRight, bottomLeft, bottomRight];
     [topLeft, topRight, bottomLeft, bottomRight].each(handleMoving(player));
   }
 

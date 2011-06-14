@@ -36,9 +36,8 @@ MyApp.playerMovement = function(elem, sortOfThis, boardMoving){
   };
 
   var movingTo = function(newPos, setting){
-    var topLeft, topRight, bottomLeft, bottomRight;
-    [topLeft, topRight, bottomLeft, bottomRight] = sortOfThis.getAllCorners(getNewCoords(newPos, setting));
-
+    var corners = sortOfThis.getAllCorners(getNewCoords(newPos, setting));;
+    var topLeft = corners[0], topRight = corners[1], bottomLeft = corners[2], bottomRight = corners[3];
 
     if (! boardMoving.canMoveTo(topLeft, topRight, bottomLeft, bottomRight)){
       return true;

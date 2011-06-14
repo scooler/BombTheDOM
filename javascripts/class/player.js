@@ -5,7 +5,7 @@ MyApp.player = function(startX, startY, number, boardBomb, boardMoving){
   var movement;
   var playerElem;
   var fromAbsolute = function(absX, absY){
-    var x = Math.floor(absX/32);
+    var x = Math.floor(absX/32); //TODO use params
     var y = Math.floor((absY+16)/32);
     return [x,y];
   };
@@ -72,8 +72,8 @@ MyApp.player = function(startX, startY, number, boardBomb, boardMoving){
   };
   playerElem = createPlayerElem();
   var layBomb = function(){
-    var x,y, bomb;
-    [x,y] = sortOfThis.fromAbsolute(parseInt(playerElem.style.left, 10)+16, parseInt(playerElem.style.top, 10)+16);
+    var bomb, cords = sortOfThis.fromAbsolute(parseInt(playerElem.style.left, 10)+16, parseInt(playerElem.style.top, 10)+16);
+    var x = cords[0], y = cords[1];
     if (availableBombs > 0 && boardBomb.canLayOn(x, y) && !dead){
       availableBombs --;
       bomb = MyApp.bomb(x ,y, function(){
