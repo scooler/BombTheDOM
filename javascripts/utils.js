@@ -3,19 +3,19 @@ MyApp.utils = (function(){
   //I like the ruby-style each
   Array.prototype.each = function(callback){ 
   var i; 
-    for (i=0; i<this.length; i++){
+    for (i = 0; i < this.length; i++){
         callback(this[i], i);
     }
   };
 
-  var toAbsolute = function(x,y){
+  var toAbsolute = function(x, y){
     var tileSize = MyApp.params.tileSize;
-    return [x*tileSize, y*tileSize];
+    return [x * tileSize, y * tileSize];
   };
 
   return {
     random: function(from, to){
-      return Math.floor((Math.random()*(to-from+1))+from);
+      return Math.floor( (Math.random() * (to - from + 1) ) + from);
     },
     toAbsolute : toAbsolute
   };
@@ -25,8 +25,8 @@ MyApp.utils.addOnLoad = (function(){
   var onLoadHandlers = [];
   window.onload = function(){
     var i;
-    for (i = 0; i<onLoadHandlers.length; i++){
-      if (typeof onLoadHandlers[i]=== "function"){
+    for (i = 0; i < onLoadHandlers.length; i++){
+      if (typeof onLoadHandlers[i] === "function"){
         onLoadHandlers[i]();
       }
     }
@@ -41,8 +41,8 @@ MyApp.utils.addCallback = function(event, callback){
   if (window.addEventListener){
     window.addEventListener(event, callback, false);
   }else if (window.attachEvent){
-    window.attachEvent("on"+event, callback);
+    window.attachEvent("on" + event, callback);
   }else {
-    window["on"+event] = callback;
+    window["on" + event] = callback;
   }
 };
