@@ -2,8 +2,8 @@ MyApp.boardPlayers = function(board){
   var players = [];
 
   var boardPlayersPossitions = function(){
-    var boardWidth = MyApp.params.boardWidth;
-    var boardHeight = MyApp.params.boardHeight;
+    var boardWidth = board.length;
+    var boardHeight = board[0].length;
     var minX = 1, minY = 1, maxX = boardWidth-2, maxY = boardHeight-2;
     return [[minX, minY], [maxX, maxY], [minX, maxY], [maxX, minY]];
   };

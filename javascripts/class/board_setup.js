@@ -8,9 +8,9 @@ MyApp.setupBoard = function(board){
   }
 
   var createBoardDOM = function(){
-    var board = document.getElementById("board");
-    var boardWidth = MyApp.params.boardWidth;
-    var boardHeight = MyApp.params.boardHeight;
+    var boardElem = document.getElementById("board");
+    var boardWidth = board.length;
+    var boardHeight = board[0].length;
     var i,j;
     var trElem, tdElem;
     // var createElem = document.createElement;
@@ -23,15 +23,15 @@ MyApp.setupBoard = function(board){
         updateBoardElem(tdElem, j, i);
         trElem.appendChild(tdElem);
       }
-      board.appendChild(trElem);
+      boardElem.appendChild(trElem);
     }
   };
 
 //first do stupid total repaint - than make shadow table
   board.repaint = function(){
     var i, j;
-    var boardWidth = MyApp.params.boardWidth;
-    var boardHeight = MyApp.params.boardHeight;
+    var boardWidth = board.length;
+    var boardHeight = board[0].length;
     var currentTR = document.getElementById("board").firstChild, currentTD = currentTR.firstChild;
     for (i = 0; i < boardHeight; i++){
       for (j = 0; j < boardWidth; j++){

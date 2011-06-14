@@ -11,10 +11,10 @@ MyApp.boardGoodies = function(board){
   //TODO implement some fairness - more than random
   var generateGoodies = function(){
     var goodies = initiateGoodies();
-    var goodieNumber = MyApp.params.boardGoodies;
+    var goodiesNumber = board.goodiesNumber;
 
     var i = 0, x, y;
-    while (i < goodieNumber){
+    while (i < goodiesNumber){
       x = MyApp.utils.random(0, board.length-1);
       y = MyApp.utils.random(0, board[0].length-1); //TODO figure out to use less magic numbers
       if (typeof goodies[x][y] === "undefined" && board[x][y] == 1){
