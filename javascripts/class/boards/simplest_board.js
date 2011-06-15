@@ -1,7 +1,8 @@
-MyApp.board = function(board){
-  var boardWidth = 20;   //in 32px filds
-  var boardHeight = 15;  //in 32px filds
-  var boardDistance = 2; //in 32px fields of empty space between hardwall on side and softwall in middle
+MyApp.initiateBoard = function(){
+  var board = [];
+  var boardWidth = 20;      //in 32px filds
+  var boardHeight = 15;     //in 32px filds
+  var boardDistance = 2;    //in 32px fields of empty space between hardwall on side and softwall in middle
   board.goodiesNumber = 35; //how many goodies should be on board
 
   //looks nice, but it isn't dynamic :(
@@ -40,7 +41,7 @@ MyApp.board = function(board){
     return 2;
   };
 
-  var initiateBoard = function(board){
+  var initiateBoard = function(){
     var width = boardWidth;
     var height = boardHeight;
     var i, j;
@@ -53,9 +54,15 @@ MyApp.board = function(board){
     }
     return board;
   };
-  board = initiateBoard(board);
 
-  MyApp.setupBoard(board);
+  board.possiblePlayersPossitions = function(){
+    var boardWidth = board.length;
+    var boardHeight = board[0].length;
+    var minX = 1, minY = 1, maxX = boardWidth-2, maxY = boardHeight-2;
+    return [[minX, minY], [maxX, maxY], [minX, maxY], [maxX, minY]];
+  };
+
+  board = initiateBoard();
   
   return board;
 };

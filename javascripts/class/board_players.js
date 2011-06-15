@@ -1,16 +1,8 @@
 MyApp.boardPlayers = function(board){
   var players = [];
 
-  var boardPlayersPossitions = function(){
-    var boardWidth = board.length;
-    var boardHeight = board[0].length;
-    var minX = 1, minY = 1, maxX = boardWidth-2, maxY = boardHeight-2;
-    return [[minX, minY], [maxX, maxY], [minX, maxY], [maxX, minY]];
-  };
-
-  var getPlayersStartPossition = function(){
-    var playersNumer = MyApp.params.playersNumer;
-    var i, result = [], playersPossitions = boardPlayersPossitions();
+  var getPlayersStartPossition = function(playersNumer){
+    var i, result = [], playersPossitions = board.possiblePlayersPossitions();
     for (i = 0; i<playersNumer; i++){
       result.push(playersPossitions.shift());
     }
@@ -37,16 +29,14 @@ MyApp.boardPlayers = function(board){
 
   var createPlayers = function(){
     var playersNumer = MyApp.params.playersNumer;
-    var playersPossitions = board.getPlayersStartPossition();
+    var playersPossitions = getPlayersStartPossition(MyApp.params.playersNumer);
     var i;
     for (i=0 ; i<playersNumer; i++){
-      players.push(MyApp.player(playersPossitions[i][0], playersPossitions[i][1], i, board.bomb, board.moving));
+      players.push(MyApp.player(playersPossitions[i][0], playersPossitions[i][1], i, board.bomb, board.movement));
     }
     // TODO maybe I should add board, with apropriate method
     MyApp.io.setPlayers(players);
   };
   MyApp.utils.addOnLoad(createPlayers);
 
-  board.getPlayersStartPossition = getPlayersStartPossition;
-  
 };
