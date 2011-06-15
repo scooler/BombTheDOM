@@ -12,10 +12,7 @@ MyApp.boardPlayers = function(board){
   board.findPlayer = function(x, y){
     var result = []
     var i, j, cords;
-    console.log(players);
     for (i = 0; i < players.length; i++){
-      console.log(players[i]);
-
       cords = players[i].getPossition();
       for (j = 0; j < cords.length; j++){
         if (x === cords[j][0] && y === cords[j][1]){
