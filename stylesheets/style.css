@@ -5,8 +5,16 @@
 }
 */
 
+
+
+
+body{
+  font-size: 16px;
+}
+
 #board{
   background-color: #98bba7;
+  float: left;
 }
 
 #board td{
@@ -34,12 +42,14 @@
 .range_goodie{
   background-image:url('../images/bonuspower.png');
 }
-div{
+
+.player, .bomb{
   width: 32px;
   height: 48px;
   background-repeat:no-repeat;
   position: absolute;
 }
+
 .player{
   background-image:url('../images/player1.png');  
 }
@@ -53,4 +63,57 @@ div{
 }
 .range-goodie{
   background-image:url('../images/bonuspower.png');  
+}
+
+
+/* Inscructions */
+.info{
+  position: relative;
+  float: right;
+  margin-right: 50px;
+  font-size: 62.5%;
+}
+
+.info article {
+  margin: 50px;
+  float: right;
+  font-size: 1.5em;
+}
+.info pre:first {
+  float: left;
+}
+
+.info h1{
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.info span{
+  font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+
+/* Media queries to define break points - fun stuff */
+
+@media screen and (max-width: 1160px){
+  .info pre{
+    float: none;
+  }
+}
+@media screen and (max-width: 945px){
+  .info{
+    float: none;
+  }
+
+  #board{
+    float: none;
+  }
 }
